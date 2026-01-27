@@ -67,14 +67,37 @@ Before building, ensure you have the following installed:
 
 ## Building the Project
 
-### Step 1: Clone the Repository
+### Quick Start (Using Build Scripts)
+
+The easiest way to build is using the provided build scripts:
+
+**Windows:**
+```cmd
+build.bat Release
+```
+
+**Linux/macOS:**
+```bash
+chmod +x build.sh
+./build.sh Release
+```
+
+Then run the application from the `bin/` directory:
+```bash
+cd bin && ./rayproj     # Linux/macOS
+cd bin && rayproj.exe   # Windows
+```
+
+### Manual Build Process
+
+#### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/CableCry/PaperMarbling.git
 cd PaperMarbling
 ```
 
-### Step 2: Configure with CMake
+#### Step 2: Configure with CMake
 
 The project uses CMake presets for easy configuration.
 
@@ -90,24 +113,19 @@ cmake --preset release
 
 > **Note**: On first run, CMake will automatically fetch and build **Raylib**, **Dear ImGui**, and **rlImGui** from GitHub. This may take a few minutes depending on your internet speed and system performance.
 
-### Step 3: Build the Project
+#### Step 3: Build the Project
 
-**On Windows (MSVC or MinGW):**
+**On Windows:**
 ```bash
-cmake --build --preset debug
-```
-
-For Release build:
-```bash
-cmake --build --preset release
+cmake --build build/release --config Release
 ```
 
 **On Linux & macOS:**
 ```bash
-cmake --build --preset debug -j
+cmake --build build/release --config Release -j$(nproc)
 ```
 
-### Step 4: Run the Executable
+#### Step 4: Run the Executable
 
 After building, the executable will be located in the `bin/` directory.
 
@@ -120,6 +138,26 @@ After building, the executable will be located in the `bin/` directory.
 ```bash
 ./bin/rayproj
 ```
+
+---
+
+## Downloading Pre-built Releases
+
+Pre-built binaries for Windows, macOS, and Linux are available from the [Releases](https://github.com/CableCry/PaperMarbling/releases) page.
+
+1. Download the appropriate archive for your platform:
+   - `PaperMarbling-Windows.zip` - Windows (x64)
+   - `PaperMarbling-Linux.tar.gz` - Linux (x64)
+   - `PaperMarbling-macOS.tar.gz` - macOS (x64 and ARM64)
+
+2. Extract the archive
+
+3. Run the executable:
+   - **Windows**: Double-click `rayproj.exe`
+   - **Linux/macOS**: Open terminal in the extracted folder and run `./rayproj`
+
+> **Note**: On macOS, you may need to allow the application in System Preferences > Security & Privacy if you get a security warning.
+> On Linux, you may need to make the executable executable: `chmod +x rayproj`
 
 ---
 
@@ -163,17 +201,58 @@ PaperMarbling/
 
 If you encounter build issues or want a completely fresh build:
 
-```bash
-# Remove previous build artifacts
-rm -rf build/
-mkdir build
-
-# Configure
-cmake --preset debug
-
-# Build
-cmake --build --preset debug -j
+**Windows:**
+```cmd
+rmdir /s /q build
+cmake --preset release
+cmake --build build/release --config Release
 ```
+
+**Linux/macOS:**
+```bash
+rm -rf build/
+cmake --preset release
+cmake --build build/release --config Release -j$(nproc)
+```
+
+---
+
+## Creating a Release
+
+To create a packaged release:
+
+```bash
+# After building with Release preset
+cd build/release
+cpack
+```
+
+This will create platform-appropriate packages:
+- **Windows**: ZIP archive
+- **macOS**: TGZ and DMG (DragNDrop) archives
+- **Linux**: TGZ archive
+
+---
+
+## GitHub Actions & Automated Releases
+
+This project includes GitHub Actions workflows for automated multi-platform builds.
+
+**To create a new release:**
+
+1. Tag your commit with a version number:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. GitHub Actions will automatically:
+   - Build for Windows, Linux, and macOS
+   - Create release artifacts
+   - Publish a GitHub Release with all binaries
+
+**Manual workflow trigger:**
+You can also manually trigger builds from the Actions tab on GitHub.
 
 ---
 

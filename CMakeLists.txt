@@ -70,3 +70,40 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
           "${CMAKE_SOURCE_DIR}/src/shaders" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders")
+
+# CPack configuration for packaging releases
+set(CPACK_PACKAGE_NAME "PaperMarbling")
+set(CPACK_PACKAGE_VENDOR "PaperMarbling")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Interactive paper marbling simulation")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
+
+if (WIN32)
+  set(CPACK_GENERATOR "ZIP")
+elseif (APPLE)
+  set(CPACK_GENERATOR "TGZ;DragNDrop")
+else()
+  set(CPACK_GENERATOR "TGZ")
+endif()
+
+install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/assets
+  DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/shaders
+  DESTINATION bin
+)
+
+install(FILES ${CMAKE_SOURCE_DIR}/README.md
+  DESTINATION .
+)
+
+include(CPack)
