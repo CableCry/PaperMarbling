@@ -23,7 +23,7 @@ static const auto UNIT_CIRCLE = []() -> std::array<Vector2, VERT_COUNT> {
   std::array<Vector2, VERT_COUNT> table{};
   for (int i = 0; i < VERT_COUNT; ++i) {
     const float t = static_cast<float>(i) / static_cast<float>(VERT_COUNT - 1);
-    const float theta = 2.0F * std::numbers::pi_v<float> * (1.0F - t);
+    const float theta = 2.0F * PI * (1.0F - t);
     table[static_cast<size_t>(i)] = Vector2{cosf(theta), sinf(theta)};
   }
   return table;
@@ -99,7 +99,7 @@ auto Drop::general_tine(const Vector2 &m, const Vector2 &b, float z, float c) ->
   // /***********************************************************************************/
 
   const float u = exp2f(-1.0F / c);
-  const Vector2 n = Vector2Rotate(m, std::numbers::pi_v<float> / 2.0F);
+  const Vector2 n = Vector2Rotate(m, PI / 2.0F);
 
   for (Vector2 &vert : _vertices) {
     const Vector2 pb = Vector2Subtract(vert, b);
