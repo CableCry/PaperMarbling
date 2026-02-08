@@ -214,36 +214,4 @@ rm -rf build/
 cmake --preset release
 cmake --build build/release --config Release -j$(nproc)
 ```
-
----
-
-## Creating a Release
-
-To create a packaged release:
-
-```bash
-# After building with Release preset
-cd build/release
-cpack
-```
-
-This will create platform-appropriate packages:
-- **Windows**: ZIP archive
-- **macOS**: TGZ and DMG (DragNDrop) archives
-- **Linux**: TGZ archive
-
----
-
-## Performance Notes
-
-- The project targets 60 FPS with vsync enabled
-- On systems with many active drops (100+), consider using the Release build for better performance
-- Tine Z value affects visual quality and performance
-
----
-
-## License
-
-This project uses open-source libraries. See their respective licenses:
-- **Raylib**: zlib License
 - **Dear ImGui**: MIT License
