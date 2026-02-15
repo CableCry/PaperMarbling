@@ -1,5 +1,6 @@
 #include "ink.hpp"
 #include "raymath.h"
+#include <cstddef>
 #include <random>
 
 namespace RNG {
@@ -36,7 +37,7 @@ Drop::Drop(Vector2 position, float radius) : _pos(position), _radius(radius) {
         Vector2Add(Vector2Scale(UNIT_CIRCLE[static_cast<size_t>(i)], radius), position);
   }
 
-  _color = COLORS[RNG::generate_random_num(static_cast<int>(COLORS.size()) - 1, 1)];
+  _color = COLORS[static_cast<size_t>(RNG::generate_random_num(static_cast<int>(COLORS.size()) - 1, 1))];
 }
 
 Drop::Drop(Vector2 position, float radius, Color color)
