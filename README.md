@@ -65,6 +65,26 @@ Before building, ensure you have the following installed:
 
 ---
 
+## Downloading Pre-built Releases
+
+Pre-built binaries for Windows, macOS, and Linux are available from the [Releases](https://github.com/CableCry/PaperMarbling/releases) page.
+
+1. Download the appropriate archive for your platform:
+   - `PaperMarbling-Windows.zip` - Windows (x64)
+   - `PaperMarbling-Linux.tar.gz` - Linux (x64)
+   - `PaperMarbling-macOS.tar.gz` - macOS (x64 and ARM64)
+
+2. Extract the archive
+
+3. Run the executable:
+   - **Windows**: Double-click `rayproj.exe`
+   - **Linux/macOS**: Open terminal in the extracted folder and run `./rayproj`
+
+> **Note**: On macOS, you may need to allow the application in System Preferences > Security & Privacy if you get a security warning.
+> On Linux, you may need to make the executable executable: `chmod +x rayproj`
+
+---
+
 ## Building the Project
 
 ### Quick Start (Using Build Scripts)
@@ -141,26 +161,6 @@ After building, the executable will be located in the `bin/` directory.
 
 ---
 
-## Downloading Pre-built Releases
-
-Pre-built binaries for Windows, macOS, and Linux are available from the [Releases](https://github.com/CableCry/PaperMarbling/releases) page.
-
-1. Download the appropriate archive for your platform:
-   - `PaperMarbling-Windows.zip` - Windows (x64)
-   - `PaperMarbling-Linux.tar.gz` - Linux (x64)
-   - `PaperMarbling-macOS.tar.gz` - macOS (x64 and ARM64)
-
-2. Extract the archive
-
-3. Run the executable:
-   - **Windows**: Double-click `rayproj.exe`
-   - **Linux/macOS**: Open terminal in the extracted folder and run `./rayproj`
-
-> **Note**: On macOS, you may need to allow the application in System Preferences > Security & Privacy if you get a security warning.
-> On Linux, you may need to make the executable executable: `chmod +x rayproj`
-
----
-
 ## Usage
 
 Once the application is running:
@@ -214,78 +214,4 @@ rm -rf build/
 cmake --preset release
 cmake --build build/release --config Release -j$(nproc)
 ```
-
----
-
-## Creating a Release
-
-To create a packaged release:
-
-```bash
-# After building with Release preset
-cd build/release
-cpack
-```
-
-This will create platform-appropriate packages:
-- **Windows**: ZIP archive
-- **macOS**: TGZ and DMG (DragNDrop) archives
-- **Linux**: TGZ archive
-
----
-
-## GitHub Actions & Automated Releases
-
-This project includes GitHub Actions workflows for automated multi-platform builds.
-
-**To create a new release:**
-
-1. Tag your commit with a version number:
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-
-2. GitHub Actions will automatically:
-   - Build for Windows, Linux, and macOS
-   - Create release artifacts
-   - Publish a GitHub Release with all binaries
-
-**Manual workflow trigger:**
-You can also manually trigger builds from the Actions tab on GitHub.
-
----
-
-## Troubleshooting
-
-**CMake not found**: Ensure CMake 3.21+ is installed and in your PATH
-```bash
-cmake --version
-```
-
-**Compiler errors**: Verify your C++20 compiler is properly installed
-```bash
-gcc --version          # For GCC
-clang --version        # For Clang
-cl.exe /?              # For MSVC
-```
-
-**Missing OpenGL libraries**: Install platform-specific development headers (see Prerequisites)
-
-**Build fails on dependencies**: Try deleting `build/` directory and rebuilding from scratch
-
----
-
-## Performance Notes
-
-- The project targets 60 FPS with vsync enabled
-- On systems with many active drops (100+), consider using the Release build for better performance
-- Tine Z value affects visual quality and performance
-
----
-
-## License
-
-This project uses open-source libraries. See their respective licenses:
-- **Raylib**: zlib License
 - **Dear ImGui**: MIT License
